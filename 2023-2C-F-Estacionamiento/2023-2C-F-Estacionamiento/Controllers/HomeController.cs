@@ -18,6 +18,12 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             return View();
         }
 
+        public IActionResult Index1(int num)
+        {
+             num = 111;
+            return View(num);
+        }
+
         public IActionResult Privacy()
         {
             return View();
