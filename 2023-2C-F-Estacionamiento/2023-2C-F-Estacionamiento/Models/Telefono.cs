@@ -10,5 +10,6 @@
 
         public int PersonaId { get; set; }
 
+        public Persona Persona { get; set; }
     }
 }

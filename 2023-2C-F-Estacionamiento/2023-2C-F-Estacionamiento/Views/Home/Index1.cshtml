@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Index 1";
+}
+
+@{
+
+    int numero = 2;
+
+
+}
+
+<div>
+
+    <p>El Numero es @numero</p>
+
+</div>
+
+<div>
+
+    @{
+        int numero1 = 2;
+        int numero2 = 1;
+        if (numero1 > numero2)
+        {
+            <p>El Numero  @numero1 es mayor</p>
+        } else
+        {
+            <p>El Numero  @numero1 es menor</p>
+
+        }
+
+    }
+
+    @{
+        <p>Muestro los numeros de la lista</p>
+        List<int> numeros = new List<int> { 1, 2, 3, 4, 5, 6 };
+        foreach (int num in numeros)
+        {
+            <span>@num</span>
+        }
+    }
+
+
+</div>

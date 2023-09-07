@@ -7,4 +7,9 @@
     <RootNamespace>_2023_2C_F_Estacionamiento</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="NewFolder\" />
+    <Folder Include="wwwroot\img\" />
+  </ItemGroup>
+
 </Project>

@@ -1,4 +1,7 @@
-﻿namespace _2023_2C_F_Estacionamiento.Models
+﻿using System.ComponentModel.DataAnnotations;
+using _2023_2C_F_Estacionamiento.Helpers;
+
+namespace _2023_2C_F_Estacionamiento.Models
 {
     public class Persona
     {
@@ -16,12 +19,24 @@
 
         public int Id { get; set; }
 
-       // public Guid Id2 { get; set; }
+        // public Guid Id2 { get; set; }
+
+        [Required(ErrorMessage =ErrMsge.Requerido)]
+
+        [MaxLength(Restricciones.maxCaracteres,ErrorMessage =ErrMsge.RangoMinMax)]
         public String Nombre { get; set; }
 
         public  String  Apellido{ get; set; }
 
         private int _dni;
+
+        [Required(ErrorMessage = ErrMsge.Requerido)]
+
+        [Range(11111111,99999999, ErrorMessage =ErrMsge.Requerido)]
+        [Display(Name = "Documento")]
+
+
+
 
         public int Dni
         {
@@ -38,8 +53,8 @@
             }
         }
 
-       
-        
+
+        [EmailAddress(ErrorMessage ="El email es invalido")]
         public String? Email { get; set; }
 
         public String NombreCompleto
@@ -48,7 +63,8 @@
                 return $"{Apellido}, {Nombre}";
              }
         }
-
+       
+        
         public Direccion Direccion { get; set; }
 
         public List<Telefono> telefonos { get; set; }
