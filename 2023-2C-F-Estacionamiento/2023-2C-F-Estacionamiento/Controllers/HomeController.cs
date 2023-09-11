@@ -1,5 +1,6 @@
 ﻿using _2023_2C_F_Estacionamiento.Models;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Diagnostics;
 
 namespace _2023_2C_F_Estacionamiento.Controllers
@@ -20,13 +21,21 @@ namespace _2023_2C_F_Estacionamiento.Controllers
 
         public IActionResult Index1(int num)
         {
-             num = 111;
+            num = 111;
             return View(num);
         }
 
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult Index2()
+        {
+
+            List<string> ciudades = new List<string> { "Roma", "Madrid", "Paris", "Lima" };
+
+            return View(ciudades);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

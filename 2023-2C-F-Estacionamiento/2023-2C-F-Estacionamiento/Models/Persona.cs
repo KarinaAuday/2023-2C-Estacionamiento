@@ -1,4 +1,6 @@
-﻿namespace _2023_2C_F_Estacionamiento.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace _2023_2C_F_Estacionamiento.Models
 {
     public class Persona
     {
@@ -21,8 +23,12 @@
 
         public  String  Apellido{ get; set; }
 
+
+   
+        
         private int _dni;
 
+       
         public int Dni
         {
             get { return _dni; }
@@ -38,9 +44,9 @@
             }
         }
 
-       
+        [Required]
         
-        public String? Email { get; set; }
+        public String Email { get; set; }
 
         public String NombreCompleto
         {

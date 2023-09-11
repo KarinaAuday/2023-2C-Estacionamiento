@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using _2023_2C_F_Estacionamiento.Data;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore;
 
 namespace _2023_2C_F_Estacionamiento
 {
@@ -8,6 +10,12 @@ namespace _2023_2C_F_Estacionamiento
         {
             //Crear una nueva instancia de nuestro Servidor Web
             var builder = WebApplication.CreateBuilder(args);
+
+            //Agrego Servicios. El contexot de base de datos le agrego el Database in memory. Expreciones Lambda
+
+            builder.Services.AddDbContext<EstacionamientoContext>(options => options.UseInMemoryDatabase("EstacionamientoDb"));
+
+
 
             ConfigureServices(builder);//Lo configuramos con sus respectivos servicios
 
