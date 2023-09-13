@@ -24,11 +24,17 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             return View(num);
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
+        public IActionResult Index2() {
+
+            List<String> ciudades = new List<string> { "Roma", "Madrid", "Paris", "Lima", "Buenos Aires" };
+
+            return View(ciudades);
+        
+        
         }
 
+
+        
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

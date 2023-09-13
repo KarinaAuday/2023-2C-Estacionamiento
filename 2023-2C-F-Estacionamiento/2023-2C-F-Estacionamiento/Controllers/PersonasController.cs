@@ -15,13 +15,13 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             return View();
         }
 
-        public IActionResult  CrearPersona (String nombre , String apellido, int dni)
+        public IActionResult  CrearPersona (String nombre , String apellido)
         {
             Persona persona = new Persona()
 
             {
                 Apellido = apellido,
-                Dni = dni,
+               // Dni = dni,
                 Nombre = nombre,
             };
 
