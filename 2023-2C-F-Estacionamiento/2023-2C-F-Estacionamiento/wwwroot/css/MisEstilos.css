@@ -1,0 +1,18 @@
+﻿﻿.navbar-brand {
+    background: url(../img/estac.jpeg) no-repeat;
+    background-size: 40px 40px;
+    height: 40px;
+    width: 40px;
+    margin: 8px;
+}
+
+.principal {
+    align-content: center;
+    text-align: center;
+}
+.centered-image {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Opcional: ajusta la altura del contenedor según tus necesidades */
+}
