@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using _2023_2C_F_Estacionamiento.Data;
 using _2023_2C_F_Estacionamiento.Models;
 
-namespace _2023_2C_F_Estacionamiento.Views
+namespace _2023_2C_F_Estacionamiento.Controllers
 {
     public class VehiculosController : Controller
     {
@@ -22,9 +22,9 @@ namespace _2023_2C_F_Estacionamiento.Views
         // GET: Vehiculos
         public async Task<IActionResult> Index()
         {
-              return _context.Vehiculo != null ? 
-                          View(await _context.Vehiculo.ToListAsync()) :
-                          Problem("Entity set 'EstacionamientoContext.Vehiculo'  is null.");
+            return _context.Vehiculo != null ?
+                        View(await _context.Vehiculo.ToListAsync()) :
+                        Problem("Entity set 'EstacionamientoContext.Vehiculo'  is null.");
         }
 
         // GET: Vehiculos/Details/5
@@ -150,14 +150,14 @@ namespace _2023_2C_F_Estacionamiento.Views
             {
                 _context.Vehiculo.Remove(vehiculo);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool VehiculoExists(int id)
         {
-          return (_context.Vehiculo?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Vehiculo?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
