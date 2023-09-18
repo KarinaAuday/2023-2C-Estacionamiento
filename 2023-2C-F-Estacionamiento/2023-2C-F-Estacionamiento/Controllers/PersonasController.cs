@@ -69,6 +69,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
 
             _contexto.Add(persona);
             _contexto.SaveChanges();
+            
 
             //Responde un Texto plano
             // return Content($"OK se creo a la Persona {persona.NombreCompleto} y el Id es {persona.Id} ");

@@ -16,6 +16,8 @@ namespace _2023_2C_F_Estacionamiento.Data
 
         public DbSet<Direccion> Direcciones { get; set; }
 
+        public DbSet<_2023_2C_F_Estacionamiento.Models.Vehiculo>? Vehiculo { get; set; }
+
 
     }
 }
