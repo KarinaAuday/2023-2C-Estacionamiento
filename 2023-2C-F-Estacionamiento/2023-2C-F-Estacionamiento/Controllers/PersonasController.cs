@@ -27,7 +27,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             //return RedirectToAction("Crear");
         }
 
-        public ActionResult Create()
+        public ActionResult Create()   //Ejemplo Con Get
         {
             
 
@@ -35,8 +35,16 @@ namespace _2023_2C_F_Estacionamiento.Controllers
 
         }
 
-            //Si no me pasan el dato que tiene el signo de parentesis me llega null , lo hago para que me envie cero si es un dato valido ya que el int lo inciializa en 0
-            public ActionResult Crear(string nombre , string apellido,int id , int ?dni )
+        public ActionResult CreatePost() //Ejemplo con Post
+        {
+
+
+            return View();
+
+        }
+
+        //Si no me pasan el dato que tiene el signo de parentesis me llega null , lo hago para que me envie cero si es un dato valido ya que el int lo inciializa en 0
+        public ActionResult Crear(string nombre , string apellido,int id , int ?dni )
         {
             Persona persona = new Persona()
             { Nombre = nombre,

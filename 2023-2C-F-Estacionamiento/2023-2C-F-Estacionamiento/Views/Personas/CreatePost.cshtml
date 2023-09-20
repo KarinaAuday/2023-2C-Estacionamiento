@@ -1,0 +1,27 @@
+﻿@model _2023_2C_F_Estacionamiento.Models.Persona
+
+@{
+    ViewData["Title"] = "Create Post";
+}
+
+<h1>View</h1>
+
+<h4>Persona</h4>
+
+<form action="@Url.Action("Crear", "Personas")" method="post">
+    <div class="form-group">
+        <label for="nombre">Nombre</label>
+        <input type="text" class="form-control" id="nombre" name="nombre" required>
+    </div>
+    <div class="form-group">
+        <label for="apellido">Apellido</label>
+        <input type="text" class="form-control" id="apellido" name="apellido" required>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Enviar</button>
+</form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
