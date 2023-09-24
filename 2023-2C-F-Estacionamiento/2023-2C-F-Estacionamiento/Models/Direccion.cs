@@ -13,9 +13,11 @@ namespace _2023_2C_F_Estacionamiento.Models
 
         public long CodPostal { get; set; }
 
-     
-        public int PersonaId { get; set; }
+        public Cliente Cliente { get; set; }
 
-        public Persona Persona { get; set; }
+
+        //public int PersonaId { get; set; }
+
+        //public Persona Persona { get; set; }
     }
 }
