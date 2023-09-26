@@ -62,7 +62,8 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             {
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Create", "Direccions", new { id = cliente.Id }); 
+               // return RedirectToAction(nameof(Index));
             }
             return View(cliente);
         }
