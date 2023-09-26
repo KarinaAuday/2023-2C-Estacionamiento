@@ -7,13 +7,14 @@ namespace _2023_2C_F_Estacionamiento.Models
     {
 
         public Cliente() { }    
-         public Cliente (String nombre ,string apellido , long cuil) : base (nombre , apellido)
-        {
-            Cuil = cuil;
-        }
+        
         [Required]
         [Display(Name = "Numero Cuil")]
         public long Cuil { get; set; }
+
+        public Direccion ?Direccion { get; set; }
+
+       
 
     }
 }

@@ -56,13 +56,13 @@ namespace _2023_2C_F_Estacionamiento.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Cuil,Id,Nombre,Apellido,Dni,Email")] Cliente cliente)
+        public async Task<IActionResult> Create([Bind("Id,Cuil,Dni,Apellido,Nombre,Email")] Cliente cliente)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(cliente);
                 await _context.SaveChangesAsync();
-                return RedirectToAction("Create", "Direccions", new { id = cliente.Id }); 
+                return RedirectToAction("Create", "Direcciones", new { id = cliente.Id }); 
                // return RedirectToAction(nameof(Index));
             }
             return View(cliente);

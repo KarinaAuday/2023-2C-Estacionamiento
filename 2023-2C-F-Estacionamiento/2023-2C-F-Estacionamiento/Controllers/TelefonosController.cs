@@ -22,7 +22,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
         // GET: Telefonos
         public async Task<IActionResult> Index()
         {
-            var estacionamientoContext = _context.Telefono.Include(t => t.Persona);
+            var estacionamientoContext = _context.Telefono.Include(t => t.Cliente);
             return View(await estacionamientoContext.ToListAsync());
         }
 
@@ -35,7 +35,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             }
 
             var telefono = await _context.Telefono
-                .Include(t => t.Persona)
+                .Include(t => t.Cliente)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (telefono == null)
             {
@@ -48,7 +48,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
         // GET: Telefonos/Create
         public IActionResult Create()
         {
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator");
+            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Apellido");
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CodArea,Numero,Principal,Tipo,PersonaId")] Telefono telefono)
+        public async Task<IActionResult> Create([Bind("Id,CodArea,Numero,Principal,Tipo,ClienteId")] Telefono telefono)
         {
             if (ModelState.IsValid)
             {
@@ -65,7 +65,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator", telefono.PersonaId);
+            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Apellido", telefono.ClienteId);
             return View(telefono);
         }
 
@@ -82,7 +82,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             {
                 return NotFound();
             }
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator", telefono.PersonaId);
+            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Apellido", telefono.ClienteId);
             return View(telefono);
         }
 
@@ -91,7 +91,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CodArea,Numero,Principal,Tipo,PersonaId")] Telefono telefono)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,CodArea,Numero,Principal,Tipo,ClienteId")] Telefono telefono)
         {
             if (id != telefono.Id)
             {
@@ -118,7 +118,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["PersonaId"] = new SelectList(_context.Personas, "Id", "Discriminator", telefono.PersonaId);
+            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Apellido", telefono.ClienteId);
             return View(telefono);
         }
 
@@ -131,7 +131,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             }
 
             var telefono = await _context.Telefono
-                .Include(t => t.Persona)
+                .Include(t => t.Cliente)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (telefono == null)
             {

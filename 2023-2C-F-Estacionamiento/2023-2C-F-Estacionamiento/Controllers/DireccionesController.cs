@@ -10,23 +10,23 @@ using _2023_2C_F_Estacionamiento.Models;
 
 namespace _2023_2C_F_Estacionamiento.Controllers
 {
-    public class DireccionsController : Controller
+    public class DireccionesController : Controller
     {
         private readonly EstacionamientoContext _context;
 
-        public DireccionsController(EstacionamientoContext context)
+        public DireccionesController(EstacionamientoContext context)
         {
             _context = context;
         }
 
-        // GET: Direccions
+        // GET: Direcciones
         public async Task<IActionResult> Index()
         {
             var estacionamientoContext = _context.Direcciones.Include(d => d.Cliente);
             return View(await estacionamientoContext.ToListAsync());
         }
 
-        // GET: Direccions/Details/5
+        // GET: Direcciones/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null || _context.Direcciones == null)
@@ -45,17 +45,17 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             return View(direccion);
         }
 
-        // GET: Direccions/Create
+        // GET: Direcciones/Create
         public IActionResult Create()
         {
             //incluyo el objeto direccion. Para cada uno de los clientes incluir la direccion si es que existe, y solo trae los que tiene nul
             ViewData["Id"] = new SelectList(_context.Cliente.Include(c => c.Direccion).Where(c => c.Direccion == null), "Id", "Apellido");
+
+            //ViewData["Id"] = new SelectList(_context.Cliente, "Id", "Discriminator");
             return View();
-           // ViewData["Id"] = new SelectList(_context.Cliente, "Id", "Discriminator");
-            //return View();
         }
 
-        // POST: Direccions/Create
+        // POST: Direcciones/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -68,14 +68,11 @@ namespace _2023_2C_F_Estacionamiento.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-
             ViewData["Id"] = new SelectList(_context.Cliente, "Id", "Apellido", direccion.Id);
             return View(direccion);
-            //ViewData["Id"] = new SelectList(_context.Cliente, "Id", "Discriminator", direccion.Id);
-           // return View(direccion);
         }
 
-        // GET: Direccions/Edit/5
+        // GET: Direcciones/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Direcciones == null)
@@ -88,11 +85,11 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             {
                 return NotFound();
             }
-            ViewData["Id"] = new SelectList(_context.Cliente, "Id", "Discriminator", direccion.Id);
+            //ViewData["Id"] = new SelectList(_context.Cliente, "Id", "Discriminator", direccion.Id);
             return View(direccion);
         }
 
-        // POST: Direccions/Edit/5
+        // POST: Direcciones/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -124,10 +121,11 @@ namespace _2023_2C_F_Estacionamiento.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["Id"] = new SelectList(_context.Cliente, "Id", "Apellido", direccion.Id); return View(direccion);
+            //ViewData["Id"] = new SelectList(_context.Cliente, "Id", "Discriminator", direccion.Id);
+            return View(direccion);
         }
 
-        // GET: Direccions/Delete/5
+        // GET: Direcciones/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null || _context.Direcciones == null)
@@ -146,7 +144,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             return View(direccion);
         }
 
-        // POST: Direccions/Delete/5
+        // POST: Direcciones/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
@@ -160,14 +158,14 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             {
                 _context.Direcciones.Remove(direccion);
             }
-
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool DireccionExists(int id)
         {
-            return (_context.Direcciones?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Direcciones?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

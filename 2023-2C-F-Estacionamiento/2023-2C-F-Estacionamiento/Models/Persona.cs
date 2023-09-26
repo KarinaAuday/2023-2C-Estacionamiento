@@ -24,25 +24,9 @@ namespace _2023_2C_F_Estacionamiento.Models
         public  String  Apellido{ get; set; }
 
 
-   
-        
-        private int _dni;
+        [Required]
 
-       
-        public int Dni
-        {
-            get { return _dni; }
-
-            set
-            {
-
-                if (_dni > 0)
-                {
-                    _dni = value;
-                }
-
-            }
-        }
+        public int Dni { get; set; }
 
         [Required]
         

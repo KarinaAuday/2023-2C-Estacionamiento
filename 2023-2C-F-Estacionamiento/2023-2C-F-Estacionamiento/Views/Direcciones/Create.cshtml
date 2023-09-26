@@ -13,9 +13,9 @@
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                @* <select asp-for="Id" class ="form-control" asp-items="ViewBag.Id"></select> *@
-                @if (ViewData["ClienteId"] == null)
+               <label asp-for="Cliente.Apellido" class="control-label"></label> 
+                <select asp-for="Id" class ="form-control" asp-items="ViewBag.Id"></select> 
+               @*  @if (ViewData["ClienteId"] == null)
                 {
                     <select asp-for="Id" class="form-control" asp-items="ViewBag.Id"></select>
                 }
@@ -23,8 +23,7 @@
                 {
 
                     <input asp-for="Id" class="form-control" value="@ViewBag.ClienteId" readonly />
-                }
-
+                } *@
             </div>
             <div class="form-group">
                 <label asp-for="Calle" class="control-label"></label>
@@ -53,7 +52,5 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

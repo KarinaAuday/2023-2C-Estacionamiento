@@ -25,7 +25,11 @@ namespace _2023_2C_F_Estacionamiento.Models
         [Display(Name = Alias.PersonaId)]
         public int PersonaId { get; set; }
 
-        public Persona Persona { get; set; }
+        public int ClienteId { get; set; }
+
+        public Persona ?Persona { get; set; }
+
+        public Cliente ?Cliente { get; set; }
 
         [NotMapped]
         public string NumeroCompleto { get { return $"({CodArea}) - {Numero}"; } }
