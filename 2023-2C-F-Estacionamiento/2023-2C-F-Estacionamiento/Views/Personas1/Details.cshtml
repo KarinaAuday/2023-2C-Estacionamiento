@@ -1,4 +1,4 @@
-﻿@model _2023_2C_F_Estacionamiento.Models.Cliente
+﻿@model _2023_2C_F_Estacionamiento.Models.Persona
 
 @{
     ViewData["Title"] = "Details";
@@ -7,15 +7,9 @@
 <h1>Details</h1>
 
 <div>
-    <h4>Cliente</h4>
+    <h4>Persona</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Cuil)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Cuil)
-        </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Nombre)
         </dt>
@@ -43,6 +37,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id" asp-route-miparametro="Prueba">Edit</a> |@* Me puedo agregar mis parametros *@
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-action="Index">Back to List</a>
 </div>

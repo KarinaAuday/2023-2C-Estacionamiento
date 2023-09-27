@@ -16,11 +16,11 @@ namespace _2023_2C_F_Estacionamiento.Data
 
         public DbSet<Direccion> Direcciones { get; set; }
 
-        public DbSet<_2023_2C_F_Estacionamiento.Models.Vehiculo>? Vehiculo { get; set; }
+        public DbSet<Vehiculo> Vehiculo { get; set; }
 
-        public DbSet<_2023_2C_F_Estacionamiento.Models.Cliente>? Cliente { get; set; }
+        public DbSet<Cliente> Cliente { get; set; }
 
-        public DbSet<_2023_2C_F_Estacionamiento.Models.Telefono>? Telefono { get; set; }
+        public DbSet<Telefono> Telefono { get; set; }
 
 
     }

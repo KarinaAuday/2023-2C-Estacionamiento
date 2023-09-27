@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Estacionamiento</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-   @*  <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/_2023_2C_F_Estacionamiento.styles.css" asp-append-version="true" /> *@
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/MisEstilos.css" asp-append-version="true" />
 </head>
 <body>
@@ -62,7 +61,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - _2023_2C_F_Estacionamiento - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <a asp-action="Incializar" asp-controller="iniBaseDatos" class="btn btn-sm btn-info">Pre Carga Db</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
