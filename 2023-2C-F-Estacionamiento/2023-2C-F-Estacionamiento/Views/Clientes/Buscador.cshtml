@@ -1,0 +1,18 @@
+﻿@model List<Cliente>
+
+
+
+<form method="get" action="@Url.Action("Buscar", "Clientes")">
+    <input type="text" name="q" placeholder="Buscar...">
+    <button type="submit">Buscar</button>
+</form>
+
+<h1>Resultados de la búsqueda</h1>
+<ul>
+    @foreach (var cliente in Model)
+    {
+
+        <li>@cliente.NombreCompleto</li>
+        <li>@cliente.Dni</li>
+    }
+</ul>

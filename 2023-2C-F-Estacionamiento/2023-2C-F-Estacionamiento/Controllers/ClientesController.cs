@@ -25,6 +25,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             return _context.Cliente != null ?
                         View(await _context.Cliente.ToListAsync()) :
                         Problem("Entity set 'EstacionamientoContext.Cliente'  is null.");
+           
         }
 
         // GET: Clientes/Details/5
@@ -159,6 +160,17 @@ namespace _2023_2C_F_Estacionamiento.Controllers
         private bool ClienteExists(int id)
         {
             return (_context.Cliente?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
+
+
+        public ActionResult Buscar(string cli)
+        {
+            cli = "Garcia";
+            // Realiza la lógica de búsqueda utilizando el término "q".
+            var resultados = _context.Cliente.Where(c => c.Apellido.Contains(cli)).ToList();
+
+            // Devuelve la vista de resultados con la lista de resultados.
+            return View("Buscador",resultados);
         }
     }
 }
