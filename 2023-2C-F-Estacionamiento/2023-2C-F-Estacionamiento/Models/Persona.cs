@@ -41,7 +41,7 @@ namespace _2023_2C_F_Estacionamiento.Models
 
         public Direccion ?Direccion { get; set; }
 
-        public List<Telefono> ?telefonos { get; set; }
+        public List<Telefono> ?Telefonos { get; set; }
 
 
     }

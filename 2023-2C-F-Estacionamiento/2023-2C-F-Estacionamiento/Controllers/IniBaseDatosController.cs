@@ -78,11 +78,11 @@ namespace _2023_2C_F_Estacionamiento.Controllers
 
         private void IncializarPersonas()
         {
-            #region primer persona prueba
+            
             //pregunto a ver si hay algo en el contexto. aca me crea una primera persona si no hay niguna
             if (!_context.Personas.Any())
             {
-
+                #region Creacion Clientes
                 //voy a crear una persona a
                 Persona persona = new Persona()
                 {
@@ -126,9 +126,10 @@ namespace _2023_2C_F_Estacionamiento.Controllers
 
                 _context.Personas.Add(persona6);
                 _context.SaveChanges();
+                #endregion 
             }
         }
-        #endregion
+       
 
     }
 }

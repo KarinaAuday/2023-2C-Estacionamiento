@@ -22,9 +22,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
         // GET: Clientes
         public async Task<IActionResult> Index()
         {
-            return _context.Cliente != null ?
-                        View(await _context.Cliente.ToListAsync()) :
-                        Problem("Entity set 'EstacionamientoContext.Cliente'  is null.");
+            return _context.Cliente != null ? View(await _context.Cliente.ToListAsync()) : Problem("Entity set 'EstacionamientoContext.Cliente'  is null.");
            
         }
 
@@ -37,12 +35,22 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             }
 
             var cliente = await _context.Cliente
-                .FirstOrDefaultAsync(m => m.Id == id);
+                                            .Include(clt => clt.Telefonos)
+                                            .Include(clt => clt.Direccion)
+                                            .FirstOrDefaultAsync(m => m.Id == id);
             if (cliente == null)
             {
                 return NotFound();
             }
+            //var direccion = await _context.Direcciones
+            //    .FirstOrDefaultAsync(m => m.Id == id);
 
+            ////if (direccion == null)
+            ////{
+            ////    return NotFound();
+            ////}
+
+            //cliente.Direccion = direccion;
             return View(cliente);
         }
 
