@@ -58,6 +58,12 @@ namespace _2023_2C_F_Estacionamiento.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,Monto,Inicio,Fin")] Estancia estancia)
         {
+            var pago = new Pago();
+            pago.Monto = estancia.Monto;
+            pago.EstanciaId = estancia.Id;
+            pago.Estancia = estancia;
+            estancia.pago = pago;
+
             if (ModelState.IsValid)
             {
                 _context.Add(estancia);

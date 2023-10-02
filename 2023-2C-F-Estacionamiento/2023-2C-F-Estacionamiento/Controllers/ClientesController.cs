@@ -34,6 +34,8 @@ namespace _2023_2C_F_Estacionamiento.Controllers
                 return NotFound();
             }
 
+            //Incluyo los objetos del contexto
+
             var cliente = await _context.Cliente
                                             .Include(clt => clt.Telefonos)
                                             .Include(clt => clt.Direccion)
