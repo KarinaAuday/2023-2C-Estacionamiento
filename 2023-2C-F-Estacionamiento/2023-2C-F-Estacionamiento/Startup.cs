@@ -13,9 +13,13 @@ namespace _2023_2C_F_Estacionamiento
 
             //Agrego Servicios. El contexot de base de datos le agrego el Database in memory. Expreciones Lambda
 
-            builder.Services.AddDbContext<EstacionamientoContext>(options => options.UseInMemoryDatabase("EstacionamientoDb"));
+            //  builder.Services.AddDbContext<EstacionamientoContext>(options => options.UseInMemoryDatabase("EstacionamientoDb"));
+            
+            //Agrego la base de datos SQL , y guardo el conection string en el appsetting.json
+            builder.Services.AddDbContext<EstacionamientoContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("EstacionamientoDBCS")));
 
 
+            builder.Services.AddControllersWithViews();
 
             ConfigureServices(builder);//Lo configuramos con sus respectivos servicios
 

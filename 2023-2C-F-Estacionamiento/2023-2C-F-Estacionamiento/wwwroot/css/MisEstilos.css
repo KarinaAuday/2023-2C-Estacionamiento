@@ -76,6 +76,8 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
+    background: linear-gradient(to bottom, #cbaf29, #95aa68); /* Cambia los colores según tu preferencia */
+}
 }
 
 .footer {

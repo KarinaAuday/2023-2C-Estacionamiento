@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using _2023_2C_F_Estacionamiento.Herlpers;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data;
@@ -9,8 +10,9 @@ namespace _2023_2C_F_Estacionamiento.Models
     {
         public int Id { get; set; }
         public int Patente { get; set; }
+
         [Required]
-        [Display(Name = "MARQUITA")]
+        [Display(Name = "Marca Auto")]
         public String Marca { get; set; }
 
         [Required]
@@ -18,7 +20,7 @@ namespace _2023_2C_F_Estacionamiento.Models
 
         [Required]
         [DataType(DataType.Date)]
-        [Display(Name ="FECHA")]
+        [Display(Name = "FECHA")]
         [NotMapped]
         public DateTime Fecha
         {
@@ -37,10 +39,10 @@ namespace _2023_2C_F_Estacionamiento.Models
 
         }
 
-        private void SetDate(DateTime date) 
+        private void SetDate(DateTime date)
         {
-            FechaHora = new DateTime(date.Year, date.Month, date.Day , FechaHora.Hour , FechaHora.Minute  ,FechaHora.Second ) ;
-        
+            FechaHora = new DateTime(date.Year, date.Month, date.Day, FechaHora.Hour, FechaHora.Minute, FechaHora.Second);
+
         }
 
         private void SetTime(DateTime date)  //Configuro la fecha que va a la base de datos con lo que tomo de los pikers. Lo use para separar el elegir Fecha y hora por separado
@@ -48,6 +50,16 @@ namespace _2023_2C_F_Estacionamiento.Models
             FechaHora = new DateTime(FechaHora.Year, FechaHora.Month, FechaHora.Day, date.Hour, date.Minute, date.Second);
 
         }
+        [Required(ErrorMessage = ErrMsgs.Requerido)]
+        public string Color { get; set; }
+
+
+        [Range(Restrictions.FloorVehiculoAnio, Restrictions.CeilVehiculoAnio, ErrorMessage = ErrMsgs.RangoMinMax)]
+        [Display(Name = Alias.Anio)]
+        public int AnioFabricacion { get; set; } = DateTime.Now.Year;
+
+        public List<ClienteVehiculo> PersonasAutorizadas { get; set; }
+
 
     }
 

@@ -10,90 +10,87 @@ using _2023_2C_F_Estacionamiento.Models;
 
 namespace _2023_2C_F_Estacionamiento.Controllers
 {
-    public class TelefonosController : Controller
+    public class EstanciasController : Controller
     {
         private readonly EstacionamientoContext _context;
 
-        public TelefonosController(EstacionamientoContext context)
+        public EstanciasController(EstacionamientoContext context)
         {
             _context = context;
         }
 
-        // GET: Telefonos
+        // GET: Estancias
         public async Task<IActionResult> Index()
         {
-            var estacionamientoContext = _context.Telefono.Include(t => t.Cliente);
-            return View(await estacionamientoContext.ToListAsync());
+            return _context.Estancia != null ?
+                        View(await _context.Estancia.ToListAsync()) :
+                        Problem("Entity set 'EstacionamientoContext.Estancia'  is null.");
         }
 
-        // GET: Telefonos/Details/5
+        // GET: Estancias/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Telefono == null)
+            if (id == null || _context.Estancia == null)
             {
                 return NotFound();
             }
 
-            var telefono = await _context.Telefono
-                .Include(t => t.Cliente)
+            var estancia = await _context.Estancia
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (telefono == null)
+            if (estancia == null)
             {
                 return NotFound();
             }
 
-            return View(telefono);
+            return View(estancia);
         }
 
-        // GET: Telefonos/Create
+        // GET: Estancias/Create
         public IActionResult Create()
         {
-            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "NombreCompleto");
             return View();
         }
 
-        // POST: Telefonos/Create
+        // POST: Estancias/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CodArea,Numero,Principal,Tipo,ClienteId")] Telefono telefono)
+        public async Task<IActionResult> Create([Bind("Id,Monto,Inicio,Fin")] Estancia estancia)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(telefono);
+                _context.Add(estancia);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "NombreCompleto", telefono.ClienteId); 
-            return View(telefono);
+            return View(estancia);
         }
 
-        // GET: Telefonos/Edit/5
+        // GET: Estancias/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Telefono == null)
+            if (id == null || _context.Estancia == null)
             {
                 return NotFound();
             }
 
-            var telefono = await _context.Telefono.FindAsync(id);
-            if (telefono == null)
+            var estancia = await _context.Estancia.FindAsync(id);
+            if (estancia == null)
             {
                 return NotFound();
             }
-            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Apellido", telefono.ClienteId);
-            return View(telefono);
+            return View(estancia);
         }
 
-        // POST: Telefonos/Edit/5
+        // POST: Estancias/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CodArea,Numero,Principal,Tipo,ClienteId")] Telefono telefono)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Monto,Inicio,Fin")] Estancia estancia)
         {
-            if (id != telefono.Id)
+            if (id != estancia.Id)
             {
                 return NotFound();
             }
@@ -102,12 +99,12 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             {
                 try
                 {
-                    _context.Update(telefono);
+                    _context.Update(estancia);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TelefonoExists(telefono.Id))
+                    if (!EstanciaExists(estancia.Id))
                     {
                         return NotFound();
                     }
@@ -118,51 +115,49 @@ namespace _2023_2C_F_Estacionamiento.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Apellido", telefono.ClienteId);
-            return View(telefono);
+            return View(estancia);
         }
 
-        // GET: Telefonos/Delete/5
+        // GET: Estancias/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Telefono == null)
+            if (id == null || _context.Estancia == null)
             {
                 return NotFound();
             }
 
-            var telefono = await _context.Telefono
-                .Include(t => t.Cliente)
+            var estancia = await _context.Estancia
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (telefono == null)
+            if (estancia == null)
             {
                 return NotFound();
             }
 
-            return View(telefono);
+            return View(estancia);
         }
 
-        // POST: Telefonos/Delete/5
+        // POST: Estancias/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Telefono == null)
+            if (_context.Estancia == null)
             {
-                return Problem("Entity set 'EstacionamientoContext.Telefono'  is null.");
+                return Problem("Entity set 'EstacionamientoContext.Estancia'  is null.");
             }
-            var telefono = await _context.Telefono.FindAsync(id);
-            if (telefono != null)
+            var estancia = await _context.Estancia.FindAsync(id);
+            if (estancia != null)
             {
-                _context.Telefono.Remove(telefono);
+                _context.Estancia.Remove(estancia);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TelefonoExists(int id)
+        private bool EstanciaExists(int id)
         {
-            return (_context.Telefono?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Estancia?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

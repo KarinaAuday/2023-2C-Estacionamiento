@@ -12,9 +12,9 @@ namespace _2023_2C_F_Estacionamiento.Models
         [Display(Name = "Numero Cuil")]
         public long Cuil { get; set; }
 
-        public Direccion ?Direccion { get; set; }
+        public Direccion? Direccion { get; set; }
 
-       
 
+        public List<ClienteVehiculo> ?VehiculosAutorizados { get; set; }
     }
 }

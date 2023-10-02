@@ -10,90 +10,87 @@ using _2023_2C_F_Estacionamiento.Models;
 
 namespace _2023_2C_F_Estacionamiento.Controllers
 {
-    public class TelefonosController : Controller
+    public class EmpleadosController : Controller
     {
         private readonly EstacionamientoContext _context;
 
-        public TelefonosController(EstacionamientoContext context)
+        public EmpleadosController(EstacionamientoContext context)
         {
             _context = context;
         }
 
-        // GET: Telefonos
+        // GET: Empleados
         public async Task<IActionResult> Index()
         {
-            var estacionamientoContext = _context.Telefono.Include(t => t.Cliente);
-            return View(await estacionamientoContext.ToListAsync());
+            return _context.Empleado != null ?
+                        View(await _context.Empleado.ToListAsync()) :
+                        Problem("Entity set 'EstacionamientoContext.Empleado'  is null.");
         }
 
-        // GET: Telefonos/Details/5
+        // GET: Empleados/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Telefono == null)
+            if (id == null || _context.Empleado == null)
             {
                 return NotFound();
             }
 
-            var telefono = await _context.Telefono
-                .Include(t => t.Cliente)
+            var empleado = await _context.Empleado
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (telefono == null)
+            if (empleado == null)
             {
                 return NotFound();
             }
 
-            return View(telefono);
+            return View(empleado);
         }
 
-        // GET: Telefonos/Create
+        // GET: Empleados/Create
         public IActionResult Create()
         {
-            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "NombreCompleto");
             return View();
         }
 
-        // POST: Telefonos/Create
+        // POST: Empleados/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,CodArea,Numero,Principal,Tipo,ClienteId")] Telefono telefono)
+        public async Task<IActionResult> Create([Bind("CodigoEmpleado,Id,Nombre,Apellido,Dni,Email")] Empleado empleado)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(telefono);
+                _context.Add(empleado);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "NombreCompleto", telefono.ClienteId); 
-            return View(telefono);
+            return View(empleado);
         }
 
-        // GET: Telefonos/Edit/5
+        // GET: Empleados/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Telefono == null)
+            if (id == null || _context.Empleado == null)
             {
                 return NotFound();
             }
 
-            var telefono = await _context.Telefono.FindAsync(id);
-            if (telefono == null)
+            var empleado = await _context.Empleado.FindAsync(id);
+            if (empleado == null)
             {
                 return NotFound();
             }
-            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Apellido", telefono.ClienteId);
-            return View(telefono);
+            return View(empleado);
         }
 
-        // POST: Telefonos/Edit/5
+        // POST: Empleados/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,CodArea,Numero,Principal,Tipo,ClienteId")] Telefono telefono)
+        public async Task<IActionResult> Edit(int id, [Bind("CodigoEmpleado,Id,Nombre,Apellido,Dni,Email")] Empleado empleado)
         {
-            if (id != telefono.Id)
+            if (id != empleado.Id)
             {
                 return NotFound();
             }
@@ -102,12 +99,12 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             {
                 try
                 {
-                    _context.Update(telefono);
+                    _context.Update(empleado);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TelefonoExists(telefono.Id))
+                    if (!EmpleadoExists(empleado.Id))
                     {
                         return NotFound();
                     }
@@ -118,51 +115,49 @@ namespace _2023_2C_F_Estacionamiento.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Apellido", telefono.ClienteId);
-            return View(telefono);
+            return View(empleado);
         }
 
-        // GET: Telefonos/Delete/5
+        // GET: Empleados/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Telefono == null)
+            if (id == null || _context.Empleado == null)
             {
                 return NotFound();
             }
 
-            var telefono = await _context.Telefono
-                .Include(t => t.Cliente)
+            var empleado = await _context.Empleado
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (telefono == null)
+            if (empleado == null)
             {
                 return NotFound();
             }
 
-            return View(telefono);
+            return View(empleado);
         }
 
-        // POST: Telefonos/Delete/5
+        // POST: Empleados/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Telefono == null)
+            if (_context.Empleado == null)
             {
-                return Problem("Entity set 'EstacionamientoContext.Telefono'  is null.");
+                return Problem("Entity set 'EstacionamientoContext.Empleado'  is null.");
             }
-            var telefono = await _context.Telefono.FindAsync(id);
-            if (telefono != null)
+            var empleado = await _context.Empleado.FindAsync(id);
+            if (empleado != null)
             {
-                _context.Telefono.Remove(telefono);
+                _context.Empleado.Remove(empleado);
             }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TelefonoExists(int id)
+        private bool EmpleadoExists(int id)
         {
-            return (_context.Telefono?.Any(e => e.Id == id)).GetValueOrDefault();
+            return (_context.Empleado?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }
