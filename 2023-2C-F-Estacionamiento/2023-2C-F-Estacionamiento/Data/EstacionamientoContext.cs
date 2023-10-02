@@ -36,6 +36,15 @@ namespace _2023_2C_F_Estacionamiento.Data
                .WithMany(v => v.PersonasAutorizadas)
                .HasForeignKey(cv => cv.VehiculoId);
 
+            #region Establecer Nombres para los Identity Stores
+            //Modifico la Entidad Identity User para que guarde en Las tablas que yo quiero
+            modelBuilder.Entity<IdentityUser<int>>().ToTable("Personas");
+            modelBuilder.Entity<IdentityRole<int>>().ToTable("Roles");
+            //Relacion Muchos a Muchos
+            modelBuilder.Entity<IdentityUserRole<int>>().ToTable("PersonasRoles");
+
+            #endregion
+
         }
         public DbSet<Persona> Personas { get; set; } 
 
