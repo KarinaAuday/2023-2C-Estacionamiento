@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace _2023_2C_F_Estacionamiento.Data.Migrations
+namespace _2023_2C_F_Estacionamiento.Migrations
 {
     public partial class Inicial : Migration
     {
@@ -90,8 +90,8 @@ namespace _2023_2C_F_Estacionamiento.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    VehiculoId = table.Column<int>(type: "int", nullable: false),
-                    ClienteId = table.Column<int>(type: "int", nullable: false),
+                    VehiculoId = table.Column<int>(type: "int", nullable: true),
+                    ClienteId = table.Column<int>(type: "int", nullable: true),
                     Monto = table.Column<decimal>(type: "decimal(38,18)", precision: 38, scale: 18, nullable: false),
                     Inicio = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Fin = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -103,14 +103,12 @@ namespace _2023_2C_F_Estacionamiento.Data.Migrations
                         name: "FK_Estancia_Personas_ClienteId",
                         column: x => x.ClienteId,
                         principalTable: "Personas",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Estancia_Vehiculo_VehiculoId",
                         column: x => x.VehiculoId,
                         principalTable: "Vehiculo",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -134,7 +132,7 @@ namespace _2023_2C_F_Estacionamiento.Data.Migrations
                         column: x => x.ClienteId,
                         principalTable: "Personas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Telefono_Personas_PersonaId",
                         column: x => x.PersonaId,

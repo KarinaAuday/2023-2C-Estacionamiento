@@ -3,19 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using _2023_2C_F_Estacionamiento.Data;
 
 #nullable disable
 
-namespace _2023_2C_F_Estacionamiento.Data.Migrations
+namespace _2023_2C_F_Estacionamiento.Migrations
 {
     [DbContext(typeof(EstacionamientoContext))]
-    [Migration("20231002203642_Inicial")]
-    partial class Inicial
+    partial class EstacionamientoContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -70,7 +68,7 @@ namespace _2023_2C_F_Estacionamiento.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ClienteId")
+                    b.Property<int?>("ClienteId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("Fin")
@@ -83,7 +81,7 @@ namespace _2023_2C_F_Estacionamiento.Data.Migrations
                         .HasPrecision(38, 18)
                         .HasColumnType("decimal(38,18)");
 
-                    b.Property<int>("VehiculoId")
+                    b.Property<int?>("VehiculoId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -279,15 +277,11 @@ namespace _2023_2C_F_Estacionamiento.Data.Migrations
                 {
                     b.HasOne("_2023_2C_F_Estacionamiento.Models.Cliente", "Cliente")
                         .WithMany()
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClienteId");
 
                     b.HasOne("_2023_2C_F_Estacionamiento.Models.Vehiculo", "Vehiculo")
                         .WithMany()
-                        .HasForeignKey("VehiculoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("VehiculoId");
 
                     b.Navigation("Cliente");
 
