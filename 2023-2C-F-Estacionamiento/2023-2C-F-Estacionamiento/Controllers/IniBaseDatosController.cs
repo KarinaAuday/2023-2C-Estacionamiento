@@ -1,5 +1,7 @@
 ﻿using _2023_2C_F_Estacionamiento.Data;
+using _2023_2C_F_Estacionamiento.Herlpers;
 using _2023_2C_F_Estacionamiento.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,16 +15,36 @@ namespace _2023_2C_F_Estacionamiento.Controllers
     {
 
         private readonly EstacionamientoContext _context;
-        public IniBaseDatosController (EstacionamientoContext contexto)
+        private readonly UserManager<Persona> _userManager;
+        private readonly RoleManager<Rol> _roleManager;
+        private readonly List<string> roles = new List<string>() { Configs.EmpleadoRolName, Configs.ClienteRolName, Configs.AdminRolName };
+
+
+        public IniBaseDatosController (UserManager<Persona> userManager, RoleManager<Rol> roleManager, EstacionamientoContext contexto)
         {
+            //Agrego usario y roles
+            this._userManager = userManager;
+            this._roleManager = roleManager;
             this._context = contexto;
         }
         public IActionResult Incializar()
         {
-           // IncializarPersonas();
+            CrearRoles().Wait();
             IncializarClientes();
             //va al index del controlador Personas1
-            return RedirectToAction("Index", "Personas");
+            return RedirectToAction("Index", "Home");
+        }
+
+
+        private async Task CrearRoles()
+        {
+            foreach (var rolName in roles)
+            {
+                if (!await _roleManager.RoleExistsAsync(rolName))
+                {
+                    await _roleManager.CreateAsync(new Rol(rolName));
+                }
+            }
         }
 
         private void IncializarClientes()
@@ -30,7 +52,6 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             if (!_context.Personas.Any())
             {
 
-                //voy a crear una persona a
                 Cliente cliente = new Cliente()
                 {
                     Nombre = "Charly",
@@ -42,7 +63,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
                 _context.Personas.Add(cliente);
                 _context.SaveChanges();
 
-                 Cliente cliente2 = new Cliente()
+                Cliente cliente2 = new Cliente()
                 {
 
                     Nombre = "Luis",
@@ -129,7 +150,9 @@ namespace _2023_2C_F_Estacionamiento.Controllers
                 #endregion 
             }
         }
-       
+
+        
+
 
     }
 }

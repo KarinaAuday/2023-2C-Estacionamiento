@@ -5,10 +5,26 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace _2023_2C_F_Estacionamiento.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class Ientity : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Roles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Roles", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Vehiculo",
                 columns: table => new
@@ -24,6 +40,70 @@ namespace _2023_2C_F_Estacionamiento.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vehiculo", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetRoleClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    RoleId = table.Column<int>(type: "int", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetRoleClaims", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetRoleClaims_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserClaims",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    ClaimType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ClaimValue = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserClaims", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserLogins",
+                columns: table => new
+                {
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderKey = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    ProviderDisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserLogins", x => new { x.LoginProvider, x.ProviderKey });
+                });
+
+            migrationBuilder.CreateTable(
+                name: "AspNetUserTokens",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    LoginProvider = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AspNetUserTokens", x => new { x.UserId, x.LoginProvider, x.Name });
                 });
 
             migrationBuilder.CreateTable(
@@ -65,11 +145,24 @@ namespace _2023_2C_F_Estacionamiento.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Dni = table.Column<int>(type: "int", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    NormalizedEmail = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
+                    EmailConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SecurityStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ConcurrencyStamp = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhoneNumberConfirmed = table.Column<bool>(type: "bit", nullable: false),
+                    TwoFactorEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    LockoutEnd = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    LockoutEnabled = table.Column<bool>(type: "bit", nullable: false),
+                    AccessFailedCount = table.Column<int>(type: "int", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Apellido = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Dni = table.Column<int>(type: "int", nullable: true),
                     Cuil = table.Column<long>(type: "bigint", nullable: true),
                     CodigoEmpleado = table.Column<string>(type: "nvarchar(10)", maxLength: 10, nullable: true),
                     DireccionId = table.Column<int>(type: "int", nullable: true)
@@ -109,6 +202,33 @@ namespace _2023_2C_F_Estacionamiento.Migrations
                         column: x => x.VehiculoId,
                         principalTable: "Vehiculo",
                         principalColumn: "Id");
+<<<<<<<< HEAD:2023-2C-F-Estacionamiento/2023-2C-F-Estacionamiento/Migrations/20231004231237_Inicial.cs
+========
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PersonasRoles",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PersonasRoles", x => new { x.UserId, x.RoleId });
+                    table.ForeignKey(
+                        name: "FK_PersonasRoles_Personas_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Personas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PersonasRoles_Roles_RoleId",
+                        column: x => x.RoleId,
+                        principalTable: "Roles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+>>>>>>>> AddDevelop_Identity:2023-2C-F-Estacionamiento/2023-2C-F-Estacionamiento/Migrations/20231009234725_Ientity.cs
                 });
 
             migrationBuilder.CreateTable(
@@ -162,6 +282,21 @@ namespace _2023_2C_F_Estacionamiento.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetRoleClaims_RoleId",
+                table: "AspNetRoleClaims",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserClaims_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AspNetUserLogins_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ClientesVehiculo_VehiculoId",
                 table: "ClientesVehiculo",
                 column: "VehiculoId");
@@ -183,9 +318,33 @@ namespace _2023_2C_F_Estacionamiento.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "EmailIndex",
+                table: "Personas",
+                column: "NormalizedEmail");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Personas_DireccionId",
                 table: "Personas",
                 column: "DireccionId");
+
+            migrationBuilder.CreateIndex(
+                name: "UserNameIndex",
+                table: "Personas",
+                column: "NormalizedUserName",
+                unique: true,
+                filter: "[NormalizedUserName] IS NOT NULL");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PersonasRoles_RoleId",
+                table: "PersonasRoles",
+                column: "RoleId");
+
+            migrationBuilder.CreateIndex(
+                name: "RoleNameIndex",
+                table: "Roles",
+                column: "NormalizedName",
+                unique: true,
+                filter: "[NormalizedName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Telefono_ClienteId",
@@ -196,6 +355,30 @@ namespace _2023_2C_F_Estacionamiento.Migrations
                 name: "IX_Telefono_PersonaId",
                 table: "Telefono",
                 column: "PersonaId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUserClaims_Personas_UserId",
+                table: "AspNetUserClaims",
+                column: "UserId",
+                principalTable: "Personas",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUserLogins_Personas_UserId",
+                table: "AspNetUserLogins",
+                column: "UserId",
+                principalTable: "Personas",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AspNetUserTokens_Personas_UserId",
+                table: "AspNetUserTokens",
+                column: "UserId",
+                principalTable: "Personas",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
                 name: "FK_ClientesVehiculo_Personas_ClienteId",
@@ -221,16 +404,34 @@ namespace _2023_2C_F_Estacionamiento.Migrations
                 table: "Direcciones");
 
             migrationBuilder.DropTable(
+                name: "AspNetRoleClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserClaims");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserLogins");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
                 name: "ClientesVehiculo");
 
             migrationBuilder.DropTable(
                 name: "Pagos");
 
             migrationBuilder.DropTable(
+                name: "PersonasRoles");
+
+            migrationBuilder.DropTable(
                 name: "Telefono");
 
             migrationBuilder.DropTable(
                 name: "Estancia");
+
+            migrationBuilder.DropTable(
+                name: "Roles");
 
             migrationBuilder.DropTable(
                 name: "Vehiculo");

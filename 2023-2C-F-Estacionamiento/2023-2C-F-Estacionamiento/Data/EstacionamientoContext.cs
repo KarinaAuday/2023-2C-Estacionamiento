@@ -1,9 +1,11 @@
 ﻿using _2023_2C_F_Estacionamiento.Models;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace _2023_2C_F_Estacionamiento.Data
 {
-    public class EstacionamientoContext : DbContext
+    public class EstacionamientoContext : IdentityDbContext<IdentityUser<int>,IdentityRole<int>,int>//el Tkey es el ultimo parametro, o pongo como parametro como entero para facilitar la materia. si no lo pone como String 
     {
         //Los objetos de esta clase van a ser los representantes de la base de datos
 
@@ -34,6 +36,15 @@ namespace _2023_2C_F_Estacionamiento.Data
                .WithMany(v => v.PersonasAutorizadas)
                .HasForeignKey(cv => cv.VehiculoId);
 
+            #region Establecer Nombres para los Identity Stores
+            //Modifico la Entidad Identity User para que guarde en Las tablas que yo quiero
+            modelBuilder.Entity<IdentityUser<int>>().ToTable("Personas");
+            modelBuilder.Entity<IdentityRole<int>>().ToTable("Roles");
+            //Relacion Muchos a Muchos
+            modelBuilder.Entity<IdentityUserRole<int>>().ToTable("PersonasRoles");
+
+            #endregion
+
         }
         public DbSet<Persona> Personas { get; set; } 
 
@@ -53,5 +64,8 @@ namespace _2023_2C_F_Estacionamiento.Data
 
         public DbSet<_2023_2C_F_Estacionamiento.Models.Estancia>? Estancia { get; set; }
 
+        public DbSet<Rol> Roles { get; set; }
+
+      
     }
 }
