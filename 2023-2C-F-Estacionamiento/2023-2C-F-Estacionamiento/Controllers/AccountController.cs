@@ -2,6 +2,7 @@
 using _2023_2C_F_Estacionamiento.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol.Plugins;
 using System.Security.Cryptography.X509Certificates;
 
 namespace _2023_2C_F_Estacionamiento.Controllers
@@ -55,15 +56,59 @@ namespace _2023_2C_F_Estacionamiento.Controllers
 
             }
 
+        public IActionResult IniciarSesion(string returnUrl)
+        {
+            //ViewBag y viewData
+            TempData["ReturnUrl"] = returnUrl;
+
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> IniciarSesion(Login loginViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                string returnUrl = TempData["ReturnUrl"] as string;
+
+                // tempData guarda info por fuera del bloque de codigo, generando una cookie temporal
 
 
-
-
+                //metodo asincronico para password adato asincronico todo
+                //le paso directamente el email (username)
+                //recordarme lo defino para ver si defini que sea persistente o no
+                var resultado = await _signinManager.PasswordSignInAsync(loginViewModel.Email, loginViewModel.Password, loginViewModel.Recordarme, false);
+                //me devuelve un signinresult
+                if (resultado.Succeeded)
+                {
+                    if (!string.IsNullOrEmpty(returnUrl))
+                    {
+                        return Redirect(returnUrl);
+                    }
+                    return RedirectToAction("Index", "Home");
+                }
+                //agrego un errror si no pudo procesar
+                ModelState.AddModelError(String.Empty, "Inicio de Sesión inválida");
+            }
+            return View(loginViewModel);
         }
 
 
-            
+        public async Task<IActionResult> CerrarSesion()
+        {
+            //Aca cierro sesion, le dice al browser que elimine esa cookie
+            await _signinManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
+        }
+
+
+
+
+
     }
+
+
+
+}
 
 
 

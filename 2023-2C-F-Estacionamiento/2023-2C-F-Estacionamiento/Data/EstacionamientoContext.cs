@@ -66,5 +66,6 @@ namespace _2023_2C_F_Estacionamiento.Data
 
         public DbSet<Rol> Roles { get; set; }
 
+      
     }
 }

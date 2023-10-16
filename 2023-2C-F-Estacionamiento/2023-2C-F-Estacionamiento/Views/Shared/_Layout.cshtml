@@ -24,31 +24,43 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Personas" asp-action="Crear">Crear Personas</a>
-                        </li>
-                      
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Personas" asp-action="Create">Personas</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="Create">Clientes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Telefonos" asp-action="Create">Telefonos</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Vehiculos" asp-action="Create">vehiculo</a>
-                        </li>
-                          <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Registrar">Registrar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="IniciarSesion">Iniciar Sesion</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="CerrarSesion">Cerrar Sesion</a>
-                        </li>
+
+                        @if (singInManager.IsSignedIn(User))
+                        {
+                            // Aca mostramos todo lo que ve
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Personas" asp-action="Crear">Crear Personas</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Personas" asp-action="Create">Personas</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="Create">Clientes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Telefonos" asp-action="Create">Telefonos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Vehiculos" asp-action="Create">vehiculo</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="CerrarSesion">Cerrar Sesion</a>
+                            </li>
+                        }
+                        else
+                        {
+                            // Mostramos para que inicie sesion, cierre o se registre
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Registrar">Registrar</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="IniciarSesion">Iniciar Sesion</a>
+                            </li>
+                            
+                        }
+                        
+                        
 
                     </ul>
                 </div>

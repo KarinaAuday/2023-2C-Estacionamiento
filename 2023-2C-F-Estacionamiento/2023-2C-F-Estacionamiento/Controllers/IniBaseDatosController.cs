@@ -32,7 +32,19 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             CrearRoles().Wait();
             IncializarClientes();
             //va al index del controlador Personas1
-            return RedirectToAction("Index", "Personas");
+            return RedirectToAction("Index", "Home");
+        }
+
+
+        private async Task CrearRoles()
+        {
+            foreach (var rolName in roles)
+            {
+                if (!await _roleManager.RoleExistsAsync(rolName))
+                {
+                    await _roleManager.CreateAsync(new Rol(rolName));
+                }
+            }
         }
 
         private void IncializarClientes()
@@ -139,16 +151,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             }
         }
 
-        private async Task CrearRoles()
-        {
-            foreach (var rolName in roles)
-            {
-                if (!await _roleManager.RoleExistsAsync(rolName))
-                {
-                    await _roleManager.CreateAsync(new Rol(rolName));
-                }
-            }
-        }
+        
 
 
     }

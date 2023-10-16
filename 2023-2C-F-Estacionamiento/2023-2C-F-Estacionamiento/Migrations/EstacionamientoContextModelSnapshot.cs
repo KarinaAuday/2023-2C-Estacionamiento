@@ -37,7 +37,7 @@ namespace _2023_2C_F_Estacionamiento.Migrations
 
                     b.HasIndex("VehiculoId");
 
-                    b.ToTable("ClientesVehiculo");
+                    b.ToTable("ClientesVehiculo", (string)null);
                 });
 
             modelBuilder.Entity("_2023_2C_F_Estacionamiento.Models.Direccion", b =>
@@ -57,7 +57,7 @@ namespace _2023_2C_F_Estacionamiento.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Direcciones");
+                    b.ToTable("Direcciones", (string)null);
                 });
 
             modelBuilder.Entity("_2023_2C_F_Estacionamiento.Models.Estancia", b =>
@@ -90,7 +90,7 @@ namespace _2023_2C_F_Estacionamiento.Migrations
 
                     b.HasIndex("VehiculoId");
 
-                    b.ToTable("Estancia");
+                    b.ToTable("Estancia", (string)null);
                 });
 
             modelBuilder.Entity("_2023_2C_F_Estacionamiento.Models.Pago", b =>
@@ -113,7 +113,7 @@ namespace _2023_2C_F_Estacionamiento.Migrations
                     b.HasIndex("EstanciaId")
                         .IsUnique();
 
-                    b.ToTable("Pagos");
+                    b.ToTable("Pagos", (string)null);
                 });
 
             modelBuilder.Entity("_2023_2C_F_Estacionamiento.Models.Telefono", b =>
@@ -149,7 +149,7 @@ namespace _2023_2C_F_Estacionamiento.Migrations
 
                     b.HasIndex("PersonaId");
 
-                    b.ToTable("Telefono");
+                    b.ToTable("Telefono", (string)null);
                 });
 
             modelBuilder.Entity("_2023_2C_F_Estacionamiento.Models.Vehiculo", b =>
@@ -179,7 +179,7 @@ namespace _2023_2C_F_Estacionamiento.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Vehiculo");
+                    b.ToTable("Vehiculo", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole<int>", b =>

@@ -1,5 +1,8 @@
 ﻿@using _2023_2C_F_Estacionamiento
 @using _2023_2C_F_Estacionamiento.Models
 @using _2023_2C_F_Estacionamiento.Models.ViewModels
+@using Microsoft.AspNetCore.Identity
 
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@*Para acceder al signimanajer en la vista y agregarle logica lo injecto aqui asi puedo usarla en cualquier vista*@
+@inject SignInManager<Persona> singInManager
