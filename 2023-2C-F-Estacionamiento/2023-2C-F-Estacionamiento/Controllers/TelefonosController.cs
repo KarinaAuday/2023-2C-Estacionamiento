@@ -59,6 +59,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,CodArea,Numero,Principal,Tipo,ClienteId")] Telefono telefono)
         {
+            telefono.PersonaId = telefono.ClienteId;
             if (ModelState.IsValid)
             {
                 _context.Add(telefono);
