@@ -28,12 +28,10 @@
                         @if (singInManager.IsSignedIn(User))
                         {
                             // Aca mostramos todo lo que ve
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Personas" asp-action="Crear">Crear Personas</a>
-                            </li>
+                            
 
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Personas" asp-action="Create">Personas</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Personas1" asp-action="Create">Personas</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Clientes" asp-action="Create">Clientes</a>
@@ -57,7 +55,14 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="IniciarSesion">Iniciar Sesion</a>
                             </li>
-                            
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="ListarRoles">Listar Roles</a>
+                                </li>
+                                
+                            }
+
                         }
                         
                         

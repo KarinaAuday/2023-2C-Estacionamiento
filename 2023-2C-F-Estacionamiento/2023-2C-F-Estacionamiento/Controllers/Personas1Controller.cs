@@ -7,16 +7,22 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using _2023_2C_F_Estacionamiento.Data;
 using _2023_2C_F_Estacionamiento.Models;
+using Microsoft.AspNetCore.Identity;
+using _2023_2C_F_Estacionamiento.Herlpers;
 
 namespace _2023_2C_F_Estacionamiento.Controllers
 {
     public class Personas1Controller : Controller
     {
         private readonly EstacionamientoContext _context;
+        private readonly UserManager<Persona> _userManager;
 
-        public Personas1Controller(EstacionamientoContext context)
+        //Adecuo para que le llegue el user a Persona
+        public Personas1Controller(EstacionamientoContext context, UserManager<Persona> userManager)
         {
             _context = context;
+            _userManager = userManager;
+
         }
 
         // GET: Personas1
@@ -52,17 +58,57 @@ namespace _2023_2C_F_Estacionamiento.Controllers
         }
 
         // POST: Personas1/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(string miTexto ,[Bind("Id,Nombre,Apellido,Dni,Email")] Persona persona)
+        public async Task<IActionResult> Create( bool EsAdmin ,[Bind("Id,Nombre,Apellido,Dni,Email")] Persona persona)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(persona);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //Asigno el username con el email
+                persona.UserName = persona.Email;
+               var resultadopersona = await _userManager.CreateAsync(persona, Configs.PasswordGenerica);
+               
+                if (resultadopersona.Succeeded)
+                {
+                    IdentityResult resultadoAddRole;
+                    string rolDefinido;
+                    //le agrego el rol correspondiente
+                    if (EsAdmin)
+                    {
+                        //Agrego rol Admin
+                        rolDefinido = Configs.AdminRolName;
+ 
+            
+                    } 
+                    else
+                    {
+                        //Agrego rol usuario
+                        rolDefinido = Configs.ClienteRolName;
+
+                    }
+                    resultadoAddRole = await _userManager.AddToRoleAsync(persona, rolDefinido);
+                    if (resultadoAddRole.Succeeded)
+                    {
+                        return RedirectToAction("index", "Personas1");
+                    }
+                    else
+                    {
+                        return Content($"No se ha podido agregar el rol{rolDefinido}");
+                    }
+
+                }
+
+                //_context.Add(persona);
+                //await _context.SaveChangesAsync();
+
+                //Procesa Errores
+                foreach (var error in resultadopersona.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+
+                
             }
             return View(persona);
         }

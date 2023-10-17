@@ -1,4 +1,5 @@
-﻿using _2023_2C_F_Estacionamiento.Models;
+﻿using _2023_2C_F_Estacionamiento.Herlpers;
+using _2023_2C_F_Estacionamiento.Models;
 using _2023_2C_F_Estacionamiento.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -33,10 +34,21 @@ namespace _2023_2C_F_Estacionamiento.Controllers
 
                 if (resultadoCreacion.Succeeded)
                 {
+                    //Agrego por default el rol de cliente
+                    var resultadoAddRole = await _userManager.AddToRoleAsync(clienteACrear, Configs.ClienteRolName);
+                    if (resultadoAddRole.Succeeded)
+                    {
+                        await _signinManager.SignInAsync(clienteACrear, isPersistent: false);
+                        //Redirecciono para llenar los datos del Cliente
+                        return RedirectToAction("Edit", "Clientes", new { id = clienteACrear.Id });
 
-                    await _signinManager.SignInAsync(clienteACrear, isPersistent: false);
-                    //Redirecciono para llenar los datos del Cliente
-                    return RedirectToAction("Edit", "Clientes", new { id = clienteACrear.Id });
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(String.Empty, $"No se puede agregar el rol {Configs.ClienteRolName}");
+
+                    }
+
                 }
 
                 foreach (var error in resultadoCreacion.Errors)
