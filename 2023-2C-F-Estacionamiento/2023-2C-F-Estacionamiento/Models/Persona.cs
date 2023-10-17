@@ -10,10 +10,12 @@ namespace _2023_2C_F_Estacionamiento.Models
 
         }
 
-        public Persona(string nombre, string apellido)
+        public Persona(string nombre, string apellido, int dni , string email)
         {
             this.Nombre = nombre;
             this.Apellido = apellido;
+            this.Dni = dni;
+            this.Email = email;
 
         }
 

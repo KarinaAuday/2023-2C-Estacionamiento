@@ -44,15 +44,15 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             {
                 return NotFound();
             }
-            //var direccion = await _context.Direcciones
-            //    .FirstOrDefaultAsync(m => m.Id == id);
+            var direccion = await _context.Direcciones
+                .FirstOrDefaultAsync(m => m.Id == id);
 
-            ////if (direccion == null)
-            ////{
-            ////    return NotFound();
-            ////}
+            if (direccion == null)
+            {
+                return NotFound();
+            }
 
-            //cliente.Direccion = direccion;
+            cliente.Direccion = direccion;
             return View(cliente);
         }
 
