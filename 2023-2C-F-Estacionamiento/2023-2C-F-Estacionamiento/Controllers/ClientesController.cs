@@ -229,7 +229,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
 
         public ActionResult Buscar(string cli)
         {
-            cli = "Garcia";
+           
             // Realiza la lógica de búsqueda utilizando el término "q".
             var resultados = _context.Cliente.Where(c => c.Apellido.Contains(cli)).ToList();
 

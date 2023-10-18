@@ -1,9 +1,11 @@
-﻿using _2023_2C_F_Estacionamiento.Herlpers;
+﻿using _2023_2C_F_Estacionamiento.Data;
+using _2023_2C_F_Estacionamiento.Herlpers;
 using _2023_2C_F_Estacionamiento.Models;
 using _2023_2C_F_Estacionamiento.Models.ViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol.Plugins;
+using SQLitePCL;
 using System.Security.Cryptography.X509Certificates;
 
 namespace _2023_2C_F_Estacionamiento.Controllers
@@ -12,11 +14,16 @@ namespace _2023_2C_F_Estacionamiento.Controllers
     {
         private readonly SignInManager<Persona> _signinManager;
         private readonly UserManager<Persona> _userManager;
+        private readonly RoleManager<Rol> _rolManager;
+        private readonly EstacionamientoContext _context;
 
-        public AccountController(UserManager<Persona> userManager , SignInManager<Persona> signInManager)
+        public AccountController(UserManager<Persona> userManager , SignInManager<Persona> signInManager , RoleManager<Rol> rolManager , EstacionamientoContext context)
         {
             this._userManager = userManager;
             this._signinManager = signInManager;
+            this._rolManager =  rolManager;
+            this._context = context;
+
         }
         public async Task<IActionResult> Registrar([Bind("Email,Password,ConfirmacionPassword")] RegistrarUsuario viewModel)
         {
@@ -112,7 +119,15 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+         
 
+        public async Task <IActionResult> ListarRoles()
+        {
+            //2 formas de obtener los Roles Exsitentes
+            var roles = _rolManager.Roles.ToList();
+            var roles2 = _context.Roles.ToList();
+            return View(roles);
+        }
 
 
 

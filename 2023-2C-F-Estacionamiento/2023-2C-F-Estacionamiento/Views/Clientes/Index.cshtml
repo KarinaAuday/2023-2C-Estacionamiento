@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+ <table class="table table-striped table-dark">
     <thead>
         <tr>
             <th>
@@ -55,10 +55,11 @@
                     @Html.DisplayFor(modelItem => item.Direccion.Calle)
                 </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
+                    <button type="button" class="boton-3d" onclick="location.href='@Url.Action("Edit", "Clientes", new { id = item.Id })'">Editar</button>
+                    <button type="button" class="boton-3d" onclick="location.href='@Url.Action("Details", "Clientes", new { id = item.Id })'">Detalles</button>
+                    <button type="button" class=" boton-3d" onclick="location.href='@Url.Action("Delete", "Clientes", new { id = item.Id })'">Eliminar</button>
+                    <button type="button" class=" boton-3d" onclick="location.href='@Url.Action("Create", "ClienteVehiculos", new { ClienteId = item.Id })'">Asignar Vehiculo</button>
+            </td>   
         </tr>
 }
     </tbody>

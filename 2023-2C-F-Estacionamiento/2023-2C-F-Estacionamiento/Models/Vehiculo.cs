@@ -8,12 +8,24 @@ namespace _2023_2C_F_Estacionamiento.Models
 {
     public class Vehiculo
     {
+        public Vehiculo()
+        {
+                
+        }
+
+        public Vehiculo(int patente , string marca ,string color )
+        {
+            this.Patente = patente;
+            this.Color  = color;
+            this.Marca =  marca;
+               
+        }
         public int Id { get; set; }
         public int Patente { get; set; }
 
         [Required]
         [Display(Name = "Marca Auto")]
-        public String Marca { get; set; }
+        public string Marca { get; set; }
 
         [Required]
         public DateTime FechaHora { get; set; }

@@ -47,27 +47,41 @@ namespace _2023_2C_F_Estacionamiento.Controllers
         }
 
         // GET: ClienteVehiculos/Create
-        public IActionResult Create()
+        public IActionResult Create(int ClienteId)
         {
-            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Discriminator");
-            ViewData["VehiculoId"] = new SelectList(_context.Vehiculo, "Id", "Color");
-            return View();
+
+
+            //ViewData["ClienteId"] = new SelectList(_context.Cliente.Where(c=>c.Id == ClienteId), "Id", "NombreCompleto");
+            ViewData["ClienteId"] = ClienteId;
+            ViewData["VehiculoId"] = new SelectList(_context.Vehiculo, "Id", "Patente");
+            ClienteVehiculo clienteVehiculo = new ClienteVehiculo();
+            clienteVehiculo.ClienteId = ClienteId;
+
+
+
+            return View(clienteVehiculo);
         }
 
         // POST: ClienteVehiculos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ClienteId,VehiculoId,ResponsablePrincipal")] ClienteVehiculo clienteVehiculo)
         {
+            clienteVehiculo.Cliente = _context.Cliente.Find(clienteVehiculo.ClienteId);
+            clienteVehiculo.Vehiculo = _context.Vehiculo.Find(clienteVehiculo.VehiculoId);
+            
+
+
             if (ModelState.IsValid)
             {
                 _context.Add(clienteVehiculo);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Discriminator", clienteVehiculo.ClienteId);
+            else
+
+                ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Discriminator", clienteVehiculo.ClienteId);
             ViewData["VehiculoId"] = new SelectList(_context.Vehiculo, "Id", "Color", clienteVehiculo.VehiculoId);
             return View(clienteVehiculo);
         }
@@ -169,6 +183,15 @@ namespace _2023_2C_F_Estacionamiento.Controllers
         private bool ClienteVehiculoExists(int id)
         {
             return (_context.ClientesVehiculo?.Any(e => e.ClienteId == id)).GetValueOrDefault();
+        }
+
+
+
+        public IActionResult AsignarVehiculo(int ClienteId)
+        {
+            ViewData["ClienteId"] = new SelectList(_context.Cliente, "Id", "Discriminator");
+            ViewData["VehiculoId"] = new SelectList(_context.Vehiculo, "Id", "Color");
+            return View();
         }
     }
 }

@@ -8,6 +8,21 @@
 }
 
 
+.boton-3d {
+    background-color: #fff; /* Fondo blanco */
+    color: #333; /* Color del texto */
+    border: 1px solid #ccc; /* Borde con color claro */
+    padding: 10px 20px;
+    border-radius: 5px; /* Esquinas redondeadas */
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2); /* Sombra 3D */
+}
+
+.boton-3d:hover {
+    background-color: #ccc; /* Cambio de color al pasar el cursor */
+}
+
+
+
 .principal {
     align-content: center;
     text-align: center;
@@ -22,7 +37,7 @@
 
 /* Provide sufficient contrast against white background */
 a {
-    color: #0366d6;
+    color: #cbbe56;
 }
 
 .btn-primary {
@@ -76,7 +91,7 @@ html {
 body {
     /* Margin bottom by footer height */
     margin-bottom: 60px;
-    background: linear-gradient(to bottom, #cbaf29, #95aa68); /* Cambia los colores según tu preferencia */
+    background: linear-gradient(to bottom, #0094ff, #1861ac); /* Cambia los colores según tu preferencia */
 }
 }
 

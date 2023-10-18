@@ -14,8 +14,10 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(string mensaje)
+            //Si recibo un mensaje lo paso a la vista 
         {
+            ViewBag.Mensaje = mensaje;
             return View();
         }
 

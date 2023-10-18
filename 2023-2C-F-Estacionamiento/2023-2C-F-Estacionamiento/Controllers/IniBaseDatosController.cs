@@ -21,7 +21,13 @@ namespace _2023_2C_F_Estacionamiento.Controllers
         private List<Empleado> empleados = new List<Empleado>()
         {
             new Empleado("123" , "Kari" , "Auday",22334455 , "kauday@gmail.com"),
-            new Empleado("124", "Juan", "Perez", 34998855, "fzabala@gmail.com"),
+            new Empleado("124", "Juan", "Perez", 34998855, "fabala@gmail.com"),
+        };
+        private List<Vehiculo> vehiculos = new List<Vehiculo>()
+        {
+            new Vehiculo(2034444,"Ford taunus" , "Verde"),
+            new Vehiculo(8484848, "Renault Clio" , "Azul") ,
+            new Vehiculo(5647866, "Mercedes benz" , "amarillo"),
         };
 
         public IniBaseDatosController(UserManager<Persona> userManager, RoleManager<Rol> roleManager, EstacionamientoContext contexto)
@@ -36,8 +42,22 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             CrearRoles().Wait();
             CrearEmpleados().Wait();
             IncializarClientes().Wait();
-            //va al index del controlador Personas1
-            return RedirectToAction("Index", "Home");
+            CrearVehiculos();
+            //va al index del Home, Y manda este mensaje por ViewBag
+            return RedirectToAction("Index", "Home", new { mensaje = "PreCarga de Base de Datos finalizada" });
+        }
+
+        private  void CrearVehiculos()
+        {
+            foreach (var vehiculo in vehiculos)
+            {
+                if (!_context.Vehiculo.Any(e => e.Patente == vehiculo.Patente))
+                {
+                    _context.Vehiculo.Add(vehiculo);
+                    _context.SaveChanges();
+                }
+
+            }
         }
 
         private async Task CrearEmpleados()
