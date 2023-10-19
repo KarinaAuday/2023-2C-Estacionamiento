@@ -68,9 +68,19 @@ namespace _2023_2C_F_Estacionamiento.Controllers
         [HttpPost]
         public async Task<IActionResult> Create([Bind("ClienteId,VehiculoId,ResponsablePrincipal")] ClienteVehiculo clienteVehiculo)
         {
-            clienteVehiculo.Cliente = _context.Cliente.Find(clienteVehiculo.ClienteId);
-            clienteVehiculo.Vehiculo = _context.Vehiculo.Find(clienteVehiculo.VehiculoId);
+
+            if (_context.Cliente.Any(c => c.Id == clienteVehiculo.ClienteId))
+            {
+                clienteVehiculo.Cliente = _context.Cliente.Find(clienteVehiculo.ClienteId);
+            }
             
+
+            if (_context.Vehiculo.Any(v => v.Id == clienteVehiculo.VehiculoId))
+            {
+                clienteVehiculo.Vehiculo = _context.Vehiculo.Find(clienteVehiculo.VehiculoId);
+            }
+            
+
 
 
             if (ModelState.IsValid)

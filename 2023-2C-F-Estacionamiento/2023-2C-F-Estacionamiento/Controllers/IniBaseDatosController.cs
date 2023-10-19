@@ -111,7 +111,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
                 };
                 cliente.UserName = cliente.Email;
                 await _userManager.CreateAsync(cliente, Configs.PasswordGenerica);
-                await _userManager.AddToRoleAsync(cliente, "Cliente");
+                await _userManager.AddToRoleAsync(cliente, Configs.ClienteRolName);
                 //_context.Cliente.Add(cliente);
                 //_context.SaveChanges();
 
