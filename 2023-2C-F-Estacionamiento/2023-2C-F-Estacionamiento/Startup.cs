@@ -1,5 +1,6 @@
 ﻿using _2023_2C_F_Estacionamiento.Data;
 using _2023_2C_F_Estacionamiento.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -37,6 +38,19 @@ namespace _2023_2C_F_Estacionamiento
            
             //Agrego la base de datos SQL , y guardo el conection string en el appsetting.json
             builder.Services.AddDbContext<EstacionamientoContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("EstacionamientoDBCS")));
+            //login path y acceso denegado
+            builder.Services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
+            opciones =>
+            {
+                opciones.LoginPath = "/Account/IniciarSesion";
+                opciones.AccessDeniedPath = "/Account/AccesoDenegado";
+                opciones.Cookie.Name = "IdentitdadEstacApp";
+
+            });
+
+
+
+            
             #region Identity
             //se Almacena en nuestro Contexto
             builder.Services.AddIdentity<Persona, Rol>().AddEntityFrameworkStores<EstacionamientoContext>();

@@ -7,9 +7,12 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using _2023_2C_F_Estacionamiento.Data;
 using _2023_2C_F_Estacionamiento.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace _2023_2C_F_Estacionamiento.Controllers
 {
+    //Solo permite acceder con sesion inciialda
+    [Authorize]
     public class ClientesController : Controller
     {
         private readonly EstacionamientoContext _context;
@@ -56,17 +59,22 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             return View(cliente);
         }
 
-        // GET: Clientes/Create
+        // Aca por ejemplo para borrar a un cliente debe tener el Rol de Empleado O de Administrar (OR)
+        [Authorize(Roles = "Admin,Empleado")]
+       
         public IActionResult Create()
         {
             return View();
         }
-
+        // Aca por ejemplo para borrar a un cliente debe tener el Rol de Empleado O de Administrar
+        [Authorize(Roles = "Admin,Empleado")]
         // POST: Clientes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
+
         public async Task<IActionResult> Create([Bind("Id,Cuil,Dni,Apellido,Nombre,Email")] Cliente cliente)
         {
             if (ModelState.IsValid)
@@ -202,7 +210,9 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             return View(cliente);
         }
 
-        // POST: Clientes/Delete/5
+        // Aca por ejemplo para borrar a un cliente debe tener el Rol de Empleado y de Administrar (AND)
+        [Authorize(Roles ="Admin") ]
+        [Authorize(Roles = "Empleado")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

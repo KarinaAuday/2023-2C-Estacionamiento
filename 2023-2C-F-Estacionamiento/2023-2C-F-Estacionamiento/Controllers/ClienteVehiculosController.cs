@@ -37,7 +37,16 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             var clienteVehiculo = await _context.ClientesVehiculo
                 .Include(c => c.Cliente)
                 .Include(c => c.Vehiculo)
-                .FirstOrDefaultAsync(m => m.ClienteId == id);
+                .Where(m => m.VehiculoId == id)
+                .Select(cv => cv.Cliente.NombreCompleto)
+                .ToListAsync();
+
+            var vehiculo = await _context.Vehiculo.FirstOrDefaultAsync(v => v.Id == id);
+            if (vehiculo != null)
+            {
+                ViewBag.Patente = vehiculo.Patente;
+            }
+
             if (clienteVehiculo == null)
             {
                 return NotFound();
@@ -73,13 +82,13 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             {
                 clienteVehiculo.Cliente = _context.Cliente.Find(clienteVehiculo.ClienteId);
             }
-            
+
 
             if (_context.Vehiculo.Any(v => v.Id == clienteVehiculo.VehiculoId))
             {
                 clienteVehiculo.Vehiculo = _context.Vehiculo.Find(clienteVehiculo.VehiculoId);
             }
-            
+
 
 
 

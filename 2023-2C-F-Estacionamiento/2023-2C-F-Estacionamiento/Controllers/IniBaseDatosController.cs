@@ -21,7 +21,7 @@ namespace _2023_2C_F_Estacionamiento.Controllers
         private List<Empleado> empleados = new List<Empleado>()
         {
             new Empleado("123" , "Kari" , "Auday",22334455 , "kauday@gmail.com"),
-            new Empleado("124", "Juan", "Perez", 34998855, "fabala@gmail.com"),
+            new Empleado("124", "Juan", "Perez", 34998855, "Jperez@gmail.com"),
         };
         private List<Vehiculo> vehiculos = new List<Vehiculo>()
         {

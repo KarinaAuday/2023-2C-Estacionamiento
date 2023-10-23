@@ -2,6 +2,7 @@
 using _2023_2C_F_Estacionamiento.Herlpers;
 using _2023_2C_F_Estacionamiento.Models;
 using _2023_2C_F_Estacionamiento.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NuGet.Protocol.Plugins;
@@ -10,6 +11,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace _2023_2C_F_Estacionamiento.Controllers
 {
+    [Authorize]
     public class AccountController : Controller
     {
         private readonly SignInManager<Persona> _signinManager;
@@ -17,14 +19,16 @@ namespace _2023_2C_F_Estacionamiento.Controllers
         private readonly RoleManager<Rol> _rolManager;
         private readonly EstacionamientoContext _context;
 
-        public AccountController(UserManager<Persona> userManager , SignInManager<Persona> signInManager , RoleManager<Rol> rolManager , EstacionamientoContext context)
+        public AccountController(UserManager<Persona> userManager, SignInManager<Persona> signInManager, RoleManager<Rol> rolManager, EstacionamientoContext context)
         {
             this._userManager = userManager;
             this._signinManager = signInManager;
-            this._rolManager =  rolManager;
+            this._rolManager = rolManager;
             this._context = context;
 
         }
+        //Para que permita registrarse a alguien sin incio de sesion
+        [AllowAnonymous]
         public async Task<IActionResult> Registrar([Bind("Email,Password,ConfirmacionPassword")] RegistrarUsuario viewModel)
         {
             if (ModelState.IsValid)
@@ -67,13 +71,14 @@ namespace _2023_2C_F_Estacionamiento.Controllers
                 }
 
             }
-                
 
 
-                return View(viewModel);
+
+            return View(viewModel);
 
 
-            }
+        }
+        [AllowAnonymous]
 
         public IActionResult IniciarSesion(string returnUrl)
         {
@@ -82,14 +87,19 @@ namespace _2023_2C_F_Estacionamiento.Controllers
 
             return View();
         }
+
+        [AllowAnonymous]
+
         [HttpPost]
         public async Task<IActionResult> IniciarSesion(Login loginViewModel)
         {
+
+            //Retorna a la URL que quise acceder antes de inciar sesion
             if (ModelState.IsValid)
             {
                 string returnUrl = TempData["ReturnUrl"] as string;
 
-                // tempData guarda info por fuera del bloque de codigo, generando una cookie temporal
+                // tempData guarda info por fuera del bloque de codigo, o sea a la vista y al proximo return generando una cookie temporal
 
 
                 //metodo asincronico para password adato asincronico todo
@@ -119,9 +129,9 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-         
-
-        public async Task <IActionResult> ListarRoles()
+        //Solo puede listar si esta logueado como Admin  
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> ListarRoles()
         {
             //2 formas de obtener los Roles Exsitentes
             var roles = _rolManager.Roles.ToList();
@@ -129,7 +139,11 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             return View(roles);
         }
 
-
+        public IActionResult AccesoDenegado(string returnUrl)
+        {
+            ViewBag.ReturnUrl = returnUrl;
+            return View();
+        }
 
     }
 
@@ -139,4 +153,4 @@ namespace _2023_2C_F_Estacionamiento.Controllers
 
 
 
-    // retunr url es null si inicia session de una, o tien un dato si es una redireccion
+// retunr url es null si inicia session de una, o tien un dato si es una redireccion
