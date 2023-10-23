@@ -11,14 +11,8 @@ using _2023_2C_F_Estacionamiento.Data;
 
 namespace _2023_2C_F_Estacionamiento.Migrations
 {
-    [DbContext(typeof(EstacionamientoContext))]
-<<<<<<<< HEAD:2023-2C-F-Estacionamiento/2023-2C-F-Estacionamiento/Migrations/20231004231237_Inicial.Designer.cs
-    [Migration("20231004231237_Inicial")]
-    partial class Inicial
-========
     [Migration("20231009234725_Ientity")]
     partial class Ientity
->>>>>>>> AddDevelop_Identity:2023-2C-F-Estacionamiento/2023-2C-F-Estacionamiento/Migrations/20231009234725_Ientity.Designer.cs
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

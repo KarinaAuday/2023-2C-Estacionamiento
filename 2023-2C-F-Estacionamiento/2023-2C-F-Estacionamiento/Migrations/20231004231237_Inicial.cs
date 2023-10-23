@@ -202,8 +202,7 @@ namespace _2023_2C_F_Estacionamiento.Migrations
                         column: x => x.VehiculoId,
                         principalTable: "Vehiculo",
                         principalColumn: "Id");
-<<<<<<<< HEAD:2023-2C-F-Estacionamiento/2023-2C-F-Estacionamiento/Migrations/20231004231237_Inicial.cs
-========
+
                 });
 
             migrationBuilder.CreateTable(
@@ -228,8 +227,7 @@ namespace _2023_2C_F_Estacionamiento.Migrations
                         principalTable: "Roles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
->>>>>>>> AddDevelop_Identity:2023-2C-F-Estacionamiento/2023-2C-F-Estacionamiento/Migrations/20231009234725_Ientity.cs
-                });
+});
 
             migrationBuilder.CreateTable(
                 name: "Telefono",
