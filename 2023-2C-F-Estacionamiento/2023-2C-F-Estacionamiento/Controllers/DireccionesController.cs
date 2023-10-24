@@ -49,12 +49,11 @@ namespace _2023_2C_F_Estacionamiento.Controllers
         public IActionResult Create(int? id)
         {
             
-            //incluyo el objeto direccion. Para cada uno de los clientes incluir la direccion si es que existe, y solo trae los que tiene nul
-            //ViewData["Id"] = new SelectList(_context.Cliente.Include(c => c.Direccion).Where(c => c.Direccion == null), "Id", "Apellido");
+            //incluyo el objeto direccion. Para cada uno de los clientes incluir la direccion si es que existe, y solo trae los que tiene null
+          ViewData["Id"] = new SelectList(_context.Cliente.Include(c => c.Direccion).Where(c => c.Direccion == null), "Id", "Apellido");
 
-            //ViewData["Id"] = new SelectList(_context.Cliente.Include(c => c.Direccion).Where(c => c.Direccion == null), "Id", "Apellido");
-
-            ViewData["Id"] = new SelectList(_context.Cliente, "Id", "Apellido");
+           
+            //ViewData["Id"] = new SelectList(_context.Cliente, "Id", "Apellido");
             return View();
         }
 

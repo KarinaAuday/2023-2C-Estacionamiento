@@ -145,6 +145,19 @@ namespace _2023_2C_F_Estacionamiento.Controllers
             return View();
         }
 
+
+        public IActionResult TestCurrentUser()
+        {
+            if (_signinManager.IsSignedIn(User))
+            {
+                string nombreUsuario = User.Identity.Name;
+                Persona persona = _context.Personas.FirstOrDefault(p => p.NormalizedEmail == nombreUsuario.ToUpper());
+                int personaId = Int32.Parse(_userManager.GetUserId(User));
+
+            }
+            return null;
+        }
+        
     }
 
 

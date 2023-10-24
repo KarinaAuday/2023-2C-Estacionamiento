@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using _2023_2C_F_Estacionamiento.Data;
 using _2023_2C_F_Estacionamiento.Models;
+using Microsoft.Data.SqlClient;
 
 namespace _2023_2C_F_Estacionamiento.Controllers
 {
@@ -48,7 +49,9 @@ namespace _2023_2C_F_Estacionamiento.Controllers
         // GET: Vehiculos/Create
         public IActionResult Create()
         {
-            return View();
+            Vehiculo vehiculo = new Vehiculo();
+            vehiculo.PersonasAutorizadas = new List<ClienteVehiculo>();
+            return View(vehiculo);
         }
 
         // POST: Vehiculos/Create
@@ -56,13 +59,33 @@ namespace _2023_2C_F_Estacionamiento.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Patente,Marca,FechaHora,Fecha")] Vehiculo vehiculo)
+        public async Task<IActionResult> Create([Bind("Id,Patente,Marca,FechaHora,Fecha,Color,PersonasAutorizadas")] Vehiculo vehiculo)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(vehiculo);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+
+                try
+                {
+
+
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+
+                }
+                catch (DbUpdateException dbex)
+                {
+                    SqlException innerException = dbex.InnerException as SqlException;
+                    if (innerException != null && (innerException.Number == 2627 || innerException.Number == 2601))
+                    {
+                        ModelState.AddModelError("Patente", "Patente ya existente");
+
+                    } 
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbex.Message);
+                    }
+                }
             }
             return View(vehiculo);
         }

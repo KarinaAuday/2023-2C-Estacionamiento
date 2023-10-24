@@ -22,6 +22,11 @@
                 <input asp-for="Marca" class="form-control" />
                 <span asp-validation-for="Marca" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="Color" class="control-label"></label>
+                <input asp-for="Color" class="form-control" />
+                <span asp-validation-for="Color" class="text-danger"></span>
+            </div>
 
             <div class="form-group">
                 <label asp-for="Fecha" class="control-label"></label>
@@ -33,6 +38,11 @@
                 <input asp-for="Hora" class="form-control" type="time" step="1" /> <!--Del Tipo Hora Picker-->
                 <span asp-validation-for="Hora" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                  <input asp-for="PersonasAutorizadas" type="hidden" class="form-control"  /> <!--Del Tipo Hora Picker-->
+             
+            </div>
+    
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

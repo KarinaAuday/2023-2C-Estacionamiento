@@ -45,6 +45,11 @@ namespace _2023_2C_F_Estacionamiento.Data
 
             #endregion
 
+            #region Unique
+            modelBuilder.Entity<Vehiculo>().HasIndex(v => v.Patente).IsUnique();
+
+            #endregion
+
         }
         public DbSet<Persona> Personas { get; set; } 
 
